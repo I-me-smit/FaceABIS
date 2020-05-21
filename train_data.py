@@ -3,17 +3,11 @@ import cv2
 import numpy as np
 from PIL import Image
 
-# Create Local Binary Patterns Histograms for face recognization
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
-#recognizer = cv2.face.EigenFaceRecognizer_create()
+path = 'Dataset'
 
-#recognizer = cv2.face.FisherFaceRecognizer_create()
-
-#This is the path you have to change to the dataset path you have created
-
-path = 'C:\\Users\\SmitRL\\Desktop\\mosip\\face_recognizer\\Dataset'
-
+modelId = input("Enter the model ID : ")
 
 def Images_ID(path):
     imagePaths = [os.path.join(path,f) for f in os.listdir(path)]
@@ -36,6 +30,6 @@ def Images_ID(path):
 IDs, faces = Images_ID(path)
 
 recognizer.train(faces,IDs)
-recognizer.save('Trainer.yml')
+recognizer.save("Models/"+modelId+".yml")
 
 cv2.destroyAllWindows()

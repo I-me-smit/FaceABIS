@@ -14,7 +14,9 @@ recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 #recognizer = cv2.face.FisherFaceRecognizer_create()
 
-recognizer.read("Trainer.yml")
+modelId = input("Enter the model ID : ")
+
+recognizer.read("Models/"+modelId+".yml")
 cap = cv2.VideoCapture(0)
 Id = 0
 Name = ""
@@ -32,29 +34,19 @@ for (x, y, w, h) in faces:
     
     Id, conf = recognizer.predict(gray[y:y + h, x:x + w])
     #Here you can make any number of ids please change according to your name and id(that you have typed in your first file) 
-    if Id == 1:
-        Name = "Smit"
-        tmpfilepath=""
-        for i in range(1,30):
-            tmpfilepath="C:\\Users\\SmitRL\\Desktop\\mosip\\face_recognizer\\Dataset\\user."+str(Id)+"."+str(i)+".jpg"
-            if os.path.exists(tmpfilepath):
-                shutil.copy(tmpfilepath, "C:\\Users\\SmitRL\\Desktop\\mosip\\face_recognizer\\RecognisedImages")
-            else:
-                break
-
-    elif Id == 2:
-        Name = "Rachna"
-    elif Id== 3:
-        Name = "Aishwarya"
-    elif Id== 3:
-        Name = "Jainil"
-    elif Id== 3:
-        Name = "Vaibhav"
+    
+    tmpfilepath=""
+    for i in range(1,30):
+        tmpfilepath="Dataset/user."+str(Id)+"."+str(i)+".jpg"
+        if os.path.exists(tmpfilepath):
+            shutil.copy(tmpfilepath, "RecognisedImages")
+        else:
+            break
         
        
             
     cv2.rectangle(img, (x - 22, y - 45), (x + w + 15, y - 22), (0, 0, 0), -1)
-    cv2.putText(img,"Name:" + str(Name), (x, y - 22), font, 1, (0, 0, 255), 2)
+    cv2.putText(img,"Id:" + str(Id), (x, y - 22), font, 1, (0, 0, 255), 2)
     
     cv2.imshow('img', img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
